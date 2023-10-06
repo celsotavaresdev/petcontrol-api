@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.ongpatinhasquebrilham.petcontrol.domain.model.User;
+import com.ongpatinhasquebrilham.petcontrol.infrastructure.security.exception.InvalidTokenException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +34,7 @@ public class TokenService {
         }
     }
 
-    public String validateToken(String token) {
+    public String validateToken(String token) throws InvalidTokenException {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
 
@@ -44,11 +45,11 @@ public class TokenService {
                     .getSubject();
 
         } catch (JWTVerificationException e) {
-            return "";
+            throw new InvalidTokenException("Invalid or Expired Token");
         }
     }
 
     private Instant generateExpirationDate() {
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+        return LocalDateTime.now().plusMinutes(15).toInstant(ZoneOffset.of("-03:00"));
     }
 }
