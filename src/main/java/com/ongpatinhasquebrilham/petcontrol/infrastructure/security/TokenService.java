@@ -4,52 +4,50 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.ongpatinhasquebrilham.petcontrol.domain.model.User;
 import com.ongpatinhasquebrilham.petcontrol.infrastructure.security.exception.InvalidTokenException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 
 @Service
 public class TokenService {
 
-    @Value("${api.security.token.secret}")
-    private String secret;
+    @Value("${api.security.jwt.secret}")
+    private String tokenSecret;
+    @Value("${api.security.jwt.issuer}")
+    private String tokenIssuer;
+    @Value("${api.security.jwt.expiration}")
+    private long accessTokenExpiration;
 
-    public String generateToken(User user) {
-        try{
-            Algorithm algorithm = Algorithm.HMAC256(secret);
-
-            return JWT.create()
-                    .withIssuer("pet-control")
-                    .withSubject(user.getUsername())
-                    .withExpiresAt(generateExpirationDate())
-                    .sign(algorithm);
-
-        } catch(JWTCreationException e) {
-            throw new RuntimeException("Error while generating token", e);
-        }
+    public String generateAccessToken(UserDetails userDetails) {
+        return generateToken(userDetails, accessTokenExpiration);
     }
 
     public String validateToken(String token) throws InvalidTokenException {
         try {
-            Algorithm algorithm = Algorithm.HMAC256(secret);
-
-            return JWT.require(algorithm)
-                    .withIssuer("pet-control")
+            return JWT.require(Algorithm.HMAC256(tokenSecret))
+                    .withIssuer(tokenIssuer)
                     .build()
                     .verify(token)
                     .getSubject();
-
         } catch (JWTVerificationException e) {
-            throw new InvalidTokenException("Invalid or Expired Token");
+            throw new InvalidTokenException("Invalid Token");
         }
     }
 
-    private Instant generateExpirationDate() {
-        return LocalDateTime.now().plusMinutes(15).toInstant(ZoneOffset.of("-03:00"));
+    private String generateToken(UserDetails userDetails, long expiration) {
+        Instant now = Instant.now();
+        try{
+            return JWT.create()
+                    .withSubject(userDetails.getUsername())
+                    .withIssuer(tokenIssuer)
+                    .withIssuedAt(now)
+                    .withExpiresAt(now.plusMillis(expiration))
+                    .sign(Algorithm.HMAC256(tokenSecret));
+        } catch(JWTCreationException e) {
+            throw new RuntimeException("Error while generating token", e);
+        }
     }
 }

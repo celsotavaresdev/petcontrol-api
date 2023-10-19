@@ -6,5 +6,7 @@ spring:
 
 api:
     security:
-        token:
+        jwt:
+            issuer: ${JWT_ISSUER}
             secret: ${JWT_SECRET}
+            expiration: ${JWT_EXPIRATION}
