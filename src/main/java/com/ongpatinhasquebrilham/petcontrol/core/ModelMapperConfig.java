@@ -1,7 +1,7 @@
 package com.ongpatinhasquebrilham.petcontrol.core;
 
-import com.ongpatinhasquebrilham.petcontrol.api.model.PetInputModel;
-import com.ongpatinhasquebrilham.petcontrol.api.model.PetModel;
+import com.ongpatinhasquebrilham.petcontrol.api.model.PetRequest;
+import com.ongpatinhasquebrilham.petcontrol.api.model.PetResponse;
 import com.ongpatinhasquebrilham.petcontrol.domain.model.Pet;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
@@ -28,13 +28,13 @@ public class ModelMapperConfig {
                                 LocalDate.now()))
                         .intValue();
 
-        modelMapper.createTypeMap(PetInputModel.class, Pet.class)
+        modelMapper.createTypeMap(PetRequest.class, Pet.class)
                 .addMappings(mapper -> mapper.using(toEstimatedBirthdate)
-                        .map(PetInputModel::getAgeInMonths, Pet::setBirthdate));
+                        .map(PetRequest::getAgeInMonths, Pet::setBirthdate));
 
-        modelMapper.createTypeMap(Pet.class, PetModel.class)
+        modelMapper.createTypeMap(Pet.class, PetResponse.class)
                 .addMappings(mapper -> mapper.using(toAgeInMonths)
-                        .map(Pet::getBirthdate, PetModel::setAgeInMonths));
+                        .map(Pet::getBirthdate, PetResponse::setAgeInMonths));
 
         return modelMapper;
     }

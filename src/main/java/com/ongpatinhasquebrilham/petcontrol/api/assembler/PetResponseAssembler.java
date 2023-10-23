@@ -1,6 +1,6 @@
 package com.ongpatinhasquebrilham.petcontrol.api.assembler;
 
-import com.ongpatinhasquebrilham.petcontrol.api.model.PetModel;
+import com.ongpatinhasquebrilham.petcontrol.api.model.PetResponse;
 import com.ongpatinhasquebrilham.petcontrol.domain.model.Pet;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -11,15 +11,15 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Component
-public class PetModelAssembler {
+public class PetResponseAssembler {
 
     private final ModelMapper modelMapper;
 
-    public PetModel toModel(Pet pet) {
-        return modelMapper.map(pet, PetModel.class);
+    public PetResponse toModel(Pet pet) {
+        return modelMapper.map(pet, PetResponse.class);
     }
 
-    public List<PetModel> toCollectionModel(List<Pet> pets) {
+    public List<PetResponse> toCollectionModel(List<Pet> pets) {
         return pets.stream()
                 .map(this::toModel)
                 .collect(Collectors.toList());

@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class PetModel {
+public class PetResponse {
+
     private Long id;
     private String name;
     private String species;
@@ -20,4 +21,5 @@ public class PetModel {
     private boolean isNeutered;
     private String vaccination;
     private String description;
+
 }

@@ -1,9 +1,9 @@
 package com.ongpatinhasquebrilham.petcontrol.api.controller;
 
-import com.ongpatinhasquebrilham.petcontrol.api.model.AuthenticationDTO;
-import com.ongpatinhasquebrilham.petcontrol.api.model.LoginResponseDTO;
-import com.ongpatinhasquebrilham.petcontrol.api.model.RefreshTokenInput;
-import com.ongpatinhasquebrilham.petcontrol.api.model.RegisterDTO;
+import com.ongpatinhasquebrilham.petcontrol.api.model.LoginRequest;
+import com.ongpatinhasquebrilham.petcontrol.api.model.LoginResponse;
+import com.ongpatinhasquebrilham.petcontrol.api.model.RefreshTokenRequest;
+import com.ongpatinhasquebrilham.petcontrol.api.model.RegisterRequest;
 import com.ongpatinhasquebrilham.petcontrol.domain.model.User;
 import com.ongpatinhasquebrilham.petcontrol.domain.repository.UserRepository;
 import com.ongpatinhasquebrilham.petcontrol.infrastructure.security.TokenService;
@@ -31,24 +31,24 @@ public class AuthenticationController {
     private TokenService tokenService;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid AuthenticationDTO data) {
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.username(), data.password());
+    public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest request) {
+        var usernamePassword = new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword());
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
         var accessToken = tokenService.generateAccessToken((User) auth.getPrincipal());
         var refreshToken = tokenService.generateRefreshToken((User) auth.getPrincipal());
 
-        return ResponseEntity.ok(new LoginResponseDTO(accessToken, refreshToken));
+        return ResponseEntity.ok(new LoginResponse(accessToken, refreshToken));
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody @Valid RegisterDTO data) {
-        if (!Objects.isNull(this.repository.findByUsername(data.username()))) {
+    public ResponseEntity<?> register(@RequestBody @Valid RegisterRequest request) {
+        if (!Objects.isNull(this.repository.findByUsername(request.getUsername()))) {
             return ResponseEntity.badRequest().build();
         }
 
-        String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        User newUser = new User(data.username(), encryptedPassword, data.role());
+        String encryptedPassword = new BCryptPasswordEncoder().encode(request.getPassword());
+        User newUser = new User(request.getUsername(), encryptedPassword, request.getRole());
 
         this.repository.save(newUser);
 
@@ -56,7 +56,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/refresh-token")
-    public ResponseEntity<?> refreshToken(@RequestBody @Valid RefreshTokenInput request) throws InvalidTokenException {
+    public ResponseEntity<?> refreshToken(@RequestBody @Valid RefreshTokenRequest request) throws InvalidTokenException {
         String token = request.getRefreshToken();
 
         tokenService.validateRefreshToken(request.getRefreshToken());
@@ -65,7 +65,7 @@ public class AuthenticationController {
         var accessToken = tokenService.generateAccessToken(repository.findByUsername(username));
         var refreshToken = tokenService.generateRefreshToken(repository.findByUsername(username));
 
-        return ResponseEntity.ok(new LoginResponseDTO(accessToken, refreshToken));
+        return ResponseEntity.ok(new LoginResponse(accessToken, refreshToken));
 
     }
 

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class PetInputModel {
+public class PetRequest {
 
     @NotBlank
     @Size(max = 80)

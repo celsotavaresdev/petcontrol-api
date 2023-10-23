@@ -1,9 +1,9 @@
 package com.ongpatinhasquebrilham.petcontrol.api.controller;
 
-import com.ongpatinhasquebrilham.petcontrol.api.assembler.PetInputModelDisassembler;
-import com.ongpatinhasquebrilham.petcontrol.api.assembler.PetModelAssembler;
-import com.ongpatinhasquebrilham.petcontrol.api.model.PetInputModel;
-import com.ongpatinhasquebrilham.petcontrol.api.model.PetModel;
+import com.ongpatinhasquebrilham.petcontrol.api.assembler.PetRequestDisassembler;
+import com.ongpatinhasquebrilham.petcontrol.api.assembler.PetResponseAssembler;
+import com.ongpatinhasquebrilham.petcontrol.api.model.PetRequest;
+import com.ongpatinhasquebrilham.petcontrol.api.model.PetResponse;
 import com.ongpatinhasquebrilham.petcontrol.domain.model.Pet;
 import com.ongpatinhasquebrilham.petcontrol.domain.service.PetService;
 import jakarta.validation.Valid;
@@ -20,40 +20,40 @@ import java.util.List;
 public class PetController {
 
 	private PetService petService;
-	private PetModelAssembler petModelAssembler;
-	private PetInputModelDisassembler petInputModelDisassembler;
+	private PetResponseAssembler petResponseAssembler;
+	private PetRequestDisassembler petRequestDisassembler;
 
 	@GetMapping
-	public ResponseEntity<List<PetModel>> getAvailablePets() {
+	public ResponseEntity<List<PetResponse>> getAvailablePets() {
 		List<Pet> pets = petService.findAllByAvailable(true);
-		return ResponseEntity.ok(petModelAssembler.toCollectionModel(pets));
+		return ResponseEntity.ok(petResponseAssembler.toCollectionModel(pets));
 	}
 
 	@PostMapping
-	public ResponseEntity<PetModel> savePet(@Valid @RequestBody PetInputModel petInputModel) {
-		Pet newPet = petService.save(petInputModelDisassembler.toDomainObject(petInputModel));
-		return ResponseEntity.status(HttpStatus.CREATED).body(petModelAssembler.toModel(newPet));
+	public ResponseEntity<PetResponse> savePet(@Valid @RequestBody PetRequest petRequest) {
+		Pet newPet = petService.save(petRequestDisassembler.toDomainObject(petRequest));
+		return ResponseEntity.status(HttpStatus.CREATED).body(petResponseAssembler.toModel(newPet));
 	}
 
 	@GetMapping("/unavailable")
-	public ResponseEntity<List<PetModel>> getUnavailablePets() {
+	public ResponseEntity<List<PetResponse>> getUnavailablePets() {
 		List<Pet> pets = petService.findAllByAvailable(false);
-		return ResponseEntity.ok(petModelAssembler.toCollectionModel(pets));
+		return ResponseEntity.ok(petResponseAssembler.toCollectionModel(pets));
 	}
 
 	@GetMapping("/{petId}")
-	public ResponseEntity<PetModel> getPet(@PathVariable Long petId) {
+	public ResponseEntity<PetResponse> getPet(@PathVariable Long petId) {
 		Pet currentPet = petService.find(petId);
-		return ResponseEntity.ok(petModelAssembler.toModel(currentPet));
+		return ResponseEntity.ok(petResponseAssembler.toModel(currentPet));
 	}
 
 	@PutMapping("/{petId}")
-	public ResponseEntity<PetModel> updatePet(@PathVariable Long petId, @Valid @RequestBody PetInputModel petInputModel) {
+	public ResponseEntity<PetResponse> updatePet(@PathVariable Long petId, @Valid @RequestBody PetRequest petRequest) {
 		Pet currentPet = petService.find(petId);
-		petInputModelDisassembler.copyToDomainObject(petInputModel, currentPet);
+		petRequestDisassembler.copyToDomainObject(petRequest, currentPet);
 
 		Pet updatedPet = petService.save(currentPet);
-		return ResponseEntity.ok(petModelAssembler.toModel(updatedPet));
+		return ResponseEntity.ok(petResponseAssembler.toModel(updatedPet));
 	}
 
 	@DeleteMapping("/{petId}")
