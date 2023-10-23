@@ -7,6 +7,9 @@ spring:
 api:
     security:
         jwt:
+            audience: ${JWT_AUDIENCE}
             issuer: ${JWT_ISSUER}
             secret: ${JWT_SECRET}
             expiration: ${JWT_EXPIRATION}
+            refresh-token:
+                expiration: ${JWT_REFRESH_TOKEN_EXPIRATION}

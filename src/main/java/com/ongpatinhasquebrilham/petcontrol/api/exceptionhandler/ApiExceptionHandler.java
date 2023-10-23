@@ -2,6 +2,8 @@ package com.ongpatinhasquebrilham.petcontrol.api.exceptionhandler;
 
 import com.ongpatinhasquebrilham.petcontrol.domain.exception.DomainException;
 import com.ongpatinhasquebrilham.petcontrol.domain.exception.EntityNotFoundException;
+import com.ongpatinhasquebrilham.petcontrol.infrastructure.security.exception.InvalidAccessTokenException;
+import com.ongpatinhasquebrilham.petcontrol.infrastructure.security.exception.InvalidRefreshTokenException;
 import jakarta.annotation.Nonnull;
 import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
@@ -52,6 +54,22 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
     public ProblemDetail handleEntityNotFoundException(EntityNotFoundException ex) {
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+        problemDetail.setTitle(ex.getMessage());
+
+        return problemDetail;
+    }
+
+    @ExceptionHandler(InvalidAccessTokenException.class)
+    public ProblemDetail handleInvalidAccessTokenException(InvalidAccessTokenException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.UNAUTHORIZED);
+        problemDetail.setTitle(ex.getMessage());
+
+        return problemDetail;
+    }
+
+    @ExceptionHandler(InvalidRefreshTokenException.class)
+    public ProblemDetail handleInvalidRefreshTokenException(InvalidRefreshTokenException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.UNAUTHORIZED);
         problemDetail.setTitle(ex.getMessage());
 
         return problemDetail;
