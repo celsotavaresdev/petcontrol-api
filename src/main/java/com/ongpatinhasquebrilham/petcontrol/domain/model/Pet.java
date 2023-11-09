@@ -62,13 +62,13 @@ public class Pet {
 	private LocalDateTime createdAt;
 
 	@Column(nullable = false)
-	private boolean available = true;
+	private PetStatus status = PetStatus.AVAILABLE;
 
 	public void turnAvailable() {
-		setAvailable(true);
+		setStatus(PetStatus.AVAILABLE);
 	}
 	public void turnUnavailable() {
-		setAvailable(false);
+		setStatus(PetStatus.UNAVAILABLE);
 	}
 
 }
