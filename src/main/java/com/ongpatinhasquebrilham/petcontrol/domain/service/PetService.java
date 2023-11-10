@@ -2,6 +2,7 @@ package com.ongpatinhasquebrilham.petcontrol.domain.service;
 
 import com.ongpatinhasquebrilham.petcontrol.domain.exception.PetNotFoundException;
 import com.ongpatinhasquebrilham.petcontrol.domain.model.Pet;
+import com.ongpatinhasquebrilham.petcontrol.domain.model.PetStatus;
 import com.ongpatinhasquebrilham.petcontrol.domain.repository.PetRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,8 +42,8 @@ public class PetService {
 		return repository.findAll();
 	}
 
-	public List<Pet> findAllByAvailable(boolean available) {
-		return repository.findAllByAvailable(available);
+	public List<Pet> findAllByStatus(String status) {
+		return repository.findAllByStatus(PetStatus.fromString(status).orElse(null));
 	}
 
 	public Pet find(Long petId) {

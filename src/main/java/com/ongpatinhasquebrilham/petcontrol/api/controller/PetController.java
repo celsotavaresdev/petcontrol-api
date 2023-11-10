@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @AllArgsConstructor
 @RestController
@@ -24,8 +25,11 @@ public class PetController {
 	private PetRequestDisassembler petRequestDisassembler;
 
 	@GetMapping
-	public ResponseEntity<List<PetResponse>> getAvailablePets() {
-		List<Pet> pets = petService.findAllByAvailable(true);
+	public ResponseEntity<List<PetResponse>> getPets(@RequestParam(required = false) String status) {
+		List<Pet> pets = (Objects.nonNull(status))
+				? petService.findAllByStatus(status)
+				: petService.findAll();
+
 		return ResponseEntity.ok(petResponseAssembler.toCollectionModel(pets));
 	}
 
@@ -33,12 +37,6 @@ public class PetController {
 	public ResponseEntity<PetResponse> savePet(@Valid @RequestBody PetRequest petRequest) {
 		Pet newPet = petService.save(petRequestDisassembler.toDomainObject(petRequest));
 		return ResponseEntity.status(HttpStatus.CREATED).body(petResponseAssembler.toModel(newPet));
-	}
-
-	@GetMapping("/unavailable")
-	public ResponseEntity<List<PetResponse>> getUnavailablePets() {
-		List<Pet> pets = petService.findAllByAvailable(false);
-		return ResponseEntity.ok(petResponseAssembler.toCollectionModel(pets));
 	}
 
 	@GetMapping("/{petId}")

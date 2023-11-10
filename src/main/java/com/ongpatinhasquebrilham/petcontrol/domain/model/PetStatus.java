@@ -2,9 +2,11 @@ package com.ongpatinhasquebrilham.petcontrol.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
+import java.util.Optional;
+
 public enum PetStatus {
     AVAILABLE("disponível"),
-    UNAVAILABLE("Indisponível");
+    UNAVAILABLE("indisponível");
 
     private final String status;
 
@@ -16,4 +18,13 @@ public enum PetStatus {
     public String status() {
         return status;
     }
+
+    public static Optional<PetStatus> fromString(String value) {
+        try {
+            return Optional.of(PetStatus.valueOf(value.toUpperCase()));
+        } catch (IllegalArgumentException | NullPointerException e) {
+            return Optional.empty();
+        }
+    }
+
 }

@@ -62,6 +62,7 @@ public class Pet {
 	private LocalDateTime createdAt;
 
 	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	private PetStatus status = PetStatus.AVAILABLE;
 
 	public void turnAvailable() {
