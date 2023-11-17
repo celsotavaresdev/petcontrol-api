@@ -13,6 +13,6 @@ api:
             audience: ${JWT_AUDIENCE:default-petcontrol-audience}
             issuer: ${JWT_ISSUER:default-petcontrol-issuer}
             secret: ${JWT_SECRET:default-petcontrol-secret}
-            expiration: ${JWT_EXPIRATION:60000} #1min
+            expiration: ${JWT_EXPIRATION:30000} #30seg
             refresh-token:
-                expiration: ${JWT_REFRESH_TOKEN_EXPIRATION:300000} #5min
+                expiration: ${JWT_REFRESH_TOKEN_EXPIRATION:60000} #1min
