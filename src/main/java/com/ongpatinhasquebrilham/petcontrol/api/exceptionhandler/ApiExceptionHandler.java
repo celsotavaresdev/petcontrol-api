@@ -4,7 +4,6 @@ import com.ongpatinhasquebrilham.petcontrol.domain.exception.DomainException;
 import com.ongpatinhasquebrilham.petcontrol.domain.exception.EntityNotFoundException;
 import com.ongpatinhasquebrilham.petcontrol.infrastructure.security.exception.InvalidAccessTokenException;
 import com.ongpatinhasquebrilham.petcontrol.infrastructure.security.exception.InvalidRefreshTokenException;
-import com.ongpatinhasquebrilham.petcontrol.util.StringUtils;
 import jakarta.annotation.Nonnull;
 import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
@@ -36,7 +35,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
         Map<String, String> fields = ex.getBindingResult().getAllErrors()
                 .stream()
-                .collect(Collectors.toMap(objectError -> StringUtils.camelCaseToSnakeCase(((FieldError) objectError).getField()),
+                .collect(Collectors.toMap(objectError -> ((FieldError) objectError).getField(),
                         objectError -> messageSource.getMessage(objectError, LocaleContextHolder.getLocale())));
 
         problemDetail.setProperty("fields", fields);
@@ -75,4 +74,5 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
         return problemDetail;
     }
+
 }
