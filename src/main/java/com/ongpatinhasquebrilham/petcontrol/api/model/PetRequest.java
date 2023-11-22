@@ -1,5 +1,9 @@
 package com.ongpatinhasquebrilham.petcontrol.api.model;
 
+import com.ongpatinhasquebrilham.petcontrol.core.validation.EnumValue;
+import com.ongpatinhasquebrilham.petcontrol.domain.model.PetGender;
+import com.ongpatinhasquebrilham.petcontrol.domain.model.PetSize;
+import com.ongpatinhasquebrilham.petcontrol.domain.model.PetSpecies;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,9 +19,11 @@ public class PetRequest {
     private String name;
 
     @NotBlank
+    @EnumValue(enumClass = PetSpecies.class, ignoreCase = true)
     private String species;
 
     @NotBlank
+    @EnumValue(enumClass = PetGender.class, ignoreCase = true)
     private String gender;
 
     @NotNull
@@ -28,6 +34,7 @@ public class PetRequest {
     private String breed;
 
     @NotBlank
+    @EnumValue(enumClass = PetSize.class, ignoreCase = true)
     private String size;
 
     @NotNull
