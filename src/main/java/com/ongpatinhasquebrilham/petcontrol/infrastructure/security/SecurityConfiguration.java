@@ -29,9 +29,11 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/auth/register").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/users").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/users/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/users/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/users/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/pets").hasRole("USER")
                         .requestMatchers(HttpMethod.POST, "/pets").hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/pets/{id}").hasRole("USER")

@@ -3,7 +3,6 @@ package com.ongpatinhasquebrilham.petcontrol.api.controller;
 import com.ongpatinhasquebrilham.petcontrol.api.model.LoginRequest;
 import com.ongpatinhasquebrilham.petcontrol.api.model.LoginResponse;
 import com.ongpatinhasquebrilham.petcontrol.api.model.RefreshTokenRequest;
-import com.ongpatinhasquebrilham.petcontrol.api.model.RegisterRequest;
 import com.ongpatinhasquebrilham.petcontrol.domain.model.User;
 import com.ongpatinhasquebrilham.petcontrol.domain.repository.UserRepository;
 import com.ongpatinhasquebrilham.petcontrol.infrastructure.security.TokenService;
@@ -13,13 +12,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/auth")
@@ -39,20 +35,6 @@ public class AuthenticationController {
         var refreshToken = tokenService.generateRefreshToken((User) auth.getPrincipal());
 
         return ResponseEntity.ok(new LoginResponse(accessToken, refreshToken));
-    }
-
-    @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody @Valid RegisterRequest request) {
-        if (!Objects.isNull(this.repository.findByUsername(request.getUsername()))) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        String encryptedPassword = new BCryptPasswordEncoder().encode(request.getPassword());
-        User newUser = new User(request.getUsername(), encryptedPassword, request.getRole());
-
-        this.repository.save(newUser);
-
-        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/refresh-token")
