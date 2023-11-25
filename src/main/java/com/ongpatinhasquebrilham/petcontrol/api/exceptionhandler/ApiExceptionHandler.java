@@ -2,6 +2,7 @@ package com.ongpatinhasquebrilham.petcontrol.api.exceptionhandler;
 
 import com.ongpatinhasquebrilham.petcontrol.domain.exception.DomainException;
 import com.ongpatinhasquebrilham.petcontrol.domain.exception.EntityNotFoundException;
+import com.ongpatinhasquebrilham.petcontrol.domain.exception.UserAlreadyExistsException;
 import com.ongpatinhasquebrilham.petcontrol.infrastructure.security.exception.InvalidAccessTokenException;
 import com.ongpatinhasquebrilham.petcontrol.infrastructure.security.exception.InvalidRefreshTokenException;
 import jakarta.annotation.Nonnull;
@@ -54,6 +55,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
     public ProblemDetail handleEntityNotFoundException(EntityNotFoundException ex) {
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+        problemDetail.setTitle(ex.getMessage());
+
+        return problemDetail;
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ProblemDetail handleUserAlreadyExistsException(UserAlreadyExistsException ex){
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
         problemDetail.setTitle(ex.getMessage());
 
         return problemDetail;
