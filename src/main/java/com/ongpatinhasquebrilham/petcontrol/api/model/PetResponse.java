@@ -21,5 +21,6 @@ public class PetResponse {
     private boolean isNeutered;
     private String vaccination;
     private String description;
+    private String status;
 
 }
