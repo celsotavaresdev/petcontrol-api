@@ -3,6 +3,7 @@ package com.ongpatinhasquebrilham.petcontrol.core;
 import com.ongpatinhasquebrilham.petcontrol.api.model.PetRequest;
 import com.ongpatinhasquebrilham.petcontrol.api.model.PetResponse;
 import com.ongpatinhasquebrilham.petcontrol.domain.model.Pet;
+import org.modelmapper.Conditions;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +18,7 @@ public class ModelMapperConfig {
     @Bean
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
 
         Converter<Integer, LocalDate> toEstimatedBirthdate =
                 ctx -> LocalDate.now().minusMonths(ctx.getSource());
