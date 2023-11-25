@@ -46,7 +46,7 @@ public class PetController {
 	}
 
 	@PutMapping("/{petId}")
-	public ResponseEntity<PetResponse> updatePet(@PathVariable Long petId, @Valid @RequestBody PetRequest petRequest) {
+	public ResponseEntity<PetResponse> updatePet(@PathVariable Long petId, @RequestBody PetRequest petRequest) {
 		Pet currentPet = petService.find(petId);
 		petRequestDisassembler.copyToDomainObject(petRequest, currentPet);
 
