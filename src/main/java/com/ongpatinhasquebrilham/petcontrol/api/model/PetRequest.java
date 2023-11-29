@@ -1,6 +1,9 @@
 package com.ongpatinhasquebrilham.petcontrol.api.model;
 
 import com.ongpatinhasquebrilham.petcontrol.core.validation.EnumValue;
+import com.ongpatinhasquebrilham.petcontrol.core.validation.NullOrNotBlank;
+import com.ongpatinhasquebrilham.petcontrol.core.validation.group.PostValidation;
+import com.ongpatinhasquebrilham.petcontrol.core.validation.group.PutValidation;
 import com.ongpatinhasquebrilham.petcontrol.domain.model.PetGender;
 import com.ongpatinhasquebrilham.petcontrol.domain.model.PetSize;
 import com.ongpatinhasquebrilham.petcontrol.domain.model.PetSpecies;
@@ -14,33 +17,39 @@ import lombok.NoArgsConstructor;
 @Data
 public class PetRequest {
 
-    @NotBlank
-    @Size(max = 80)
+    @NotBlank(groups = PostValidation.class)
+    @NullOrNotBlank(groups = PutValidation.class)
+    @Size(max = 80, groups = {PostValidation.class, PutValidation.class})
     private String name;
 
-    @NotBlank
-    @EnumValue(enumClass = PetSpecies.class, ignoreCase = true)
+    @NotBlank(groups = PostValidation.class)
+    @NullOrNotBlank(groups = PutValidation.class)
+    @EnumValue(enumClass = PetSpecies.class, ignoreCase = true, groups = {PostValidation.class, PutValidation.class})
     private String species;
 
-    @NotBlank
-    @EnumValue(enumClass = PetGender.class, ignoreCase = true)
+    @NotBlank(groups = PostValidation.class)
+    @NullOrNotBlank(groups = PutValidation.class)
+    @EnumValue(enumClass = PetGender.class, ignoreCase = true, groups = {PostValidation.class, PutValidation.class})
     private String gender;
 
-    @NotNull
-    @PositiveOrZero
+    @NotNull(groups = PostValidation.class)
+    @PositiveOrZero(groups = {PostValidation.class, PutValidation.class})
     private Integer ageInMonths;
 
-    @NotBlank
+    @NotBlank(groups = PostValidation.class)
+    @NullOrNotBlank(groups = PutValidation.class)
     private String breed;
 
-    @NotBlank
-    @EnumValue(enumClass = PetSize.class, ignoreCase = true)
+    @NotBlank(groups = PostValidation.class)
+    @NullOrNotBlank(groups = PutValidation.class)
+    @EnumValue(enumClass = PetSize.class, ignoreCase = true, groups = {PostValidation.class, PutValidation.class})
     private String size;
 
-    @NotNull
+    @NotNull(groups = PostValidation.class)
+    @Digits(integer = 3, fraction = 2, groups = {PostValidation.class, PutValidation.class})
     private double weight;
 
-    @Pattern(regexp = "[0-9]{15}")
+    @Pattern(regexp = "[0-9]{15}", groups = {PostValidation.class, PutValidation.class})
     private String microchip;
 
     private boolean isNeutered;

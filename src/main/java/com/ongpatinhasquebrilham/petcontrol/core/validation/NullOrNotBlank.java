@@ -10,15 +10,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Documented
-@Constraint(validatedBy = EnumValueValidator.class)
+@Constraint(validatedBy = NullOrNotBlankValidator.class)
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER })
-public @interface EnumValue {
+@Target(ElementType.FIELD)
+public @interface NullOrNotBlank {
 
-    String message() default "Value not permitted";
+    String message() default "Must not be blank";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
-    Class<? extends java.lang.Enum<?>> enumClass();
-    boolean ignoreCase() default false;
 
 }

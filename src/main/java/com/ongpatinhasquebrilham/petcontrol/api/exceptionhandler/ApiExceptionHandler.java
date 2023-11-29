@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.*;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -36,8 +37,11 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
         Map<String, String> fields = ex.getBindingResult().getAllErrors()
                 .stream()
-                .collect(Collectors.toMap(objectError -> ((FieldError) objectError).getField(),
-                        objectError -> messageSource.getMessage(objectError, LocaleContextHolder.getLocale())));
+                .collect(Collectors.toMap(
+                        objectError -> ((FieldError) objectError).getField(),
+                        objectError -> messageSource.getMessage(objectError, LocaleContextHolder.getLocale()),
+                        (e1, e2) -> e1
+                ));
 
         problemDetail.setProperty("fields", fields);
 

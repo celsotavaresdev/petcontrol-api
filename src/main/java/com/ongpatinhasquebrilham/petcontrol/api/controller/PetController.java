@@ -4,12 +4,14 @@ import com.ongpatinhasquebrilham.petcontrol.api.assembler.PetRequestDisassembler
 import com.ongpatinhasquebrilham.petcontrol.api.assembler.PetResponseAssembler;
 import com.ongpatinhasquebrilham.petcontrol.api.model.PetRequest;
 import com.ongpatinhasquebrilham.petcontrol.api.model.PetResponse;
+import com.ongpatinhasquebrilham.petcontrol.core.validation.group.PostValidation;
+import com.ongpatinhasquebrilham.petcontrol.core.validation.group.PutValidation;
 import com.ongpatinhasquebrilham.petcontrol.domain.model.Pet;
 import com.ongpatinhasquebrilham.petcontrol.domain.service.PetService;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,7 +36,7 @@ public class PetController {
 	}
 
 	@PostMapping
-	public ResponseEntity<PetResponse> savePet(@Valid @RequestBody PetRequest petRequest) {
+	public ResponseEntity<PetResponse> savePet(@Validated(PostValidation.class) @RequestBody PetRequest petRequest) {
 		Pet newPet = petService.save(petRequestDisassembler.toDomainObject(petRequest));
 		return ResponseEntity.status(HttpStatus.CREATED).body(petResponseAssembler.toModel(newPet));
 	}
@@ -46,7 +48,7 @@ public class PetController {
 	}
 
 	@PutMapping("/{petId}")
-	public ResponseEntity<PetResponse> updatePet(@PathVariable Long petId, @RequestBody PetRequest petRequest) {
+	public ResponseEntity<PetResponse> updatePet(@PathVariable Long petId, @Validated(PutValidation.class) @RequestBody PetRequest petRequest) {
 		Pet currentPet = petService.find(petId);
 		petRequestDisassembler.copyToDomainObject(petRequest, currentPet);
 

@@ -4,15 +4,17 @@ import com.ongpatinhasquebrilham.petcontrol.api.assembler.UserRequestDisassemble
 import com.ongpatinhasquebrilham.petcontrol.api.assembler.UserResponseAssembler;
 import com.ongpatinhasquebrilham.petcontrol.api.model.UserRequest;
 import com.ongpatinhasquebrilham.petcontrol.api.model.UserResponse;
+import com.ongpatinhasquebrilham.petcontrol.core.validation.group.PostValidation;
+import com.ongpatinhasquebrilham.petcontrol.core.validation.group.PutValidation;
 import com.ongpatinhasquebrilham.petcontrol.domain.exception.UserAlreadyExistsException;
 import com.ongpatinhasquebrilham.petcontrol.domain.model.User;
 import com.ongpatinhasquebrilham.petcontrol.domain.repository.UserRepository;
 import com.ongpatinhasquebrilham.petcontrol.domain.service.UserService;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,7 +37,7 @@ public class UserController {
 	}
 
 	@PostMapping
-	public ResponseEntity<UserResponse> saveUser(@Valid @RequestBody UserRequest userRequest) {
+	public ResponseEntity<UserResponse> saveUser(@Validated(PostValidation.class) @RequestBody UserRequest userRequest) {
 		if (Objects.nonNull(this.userRepository.findByUsername(userRequest.getUsername()))) {
 			throw new UserAlreadyExistsException(String.format("Já existe um cadastro de usuário com o nome %s", userRequest.getUsername()));
 		}
@@ -55,7 +57,7 @@ public class UserController {
 	}
 
 	@PutMapping("/{userId}")
-	public ResponseEntity<UserResponse> updateUser(@PathVariable Long userId, @RequestBody UserRequest userRequest) {
+	public ResponseEntity<UserResponse> updateUser(@PathVariable Long userId, @Validated(PutValidation.class) @RequestBody UserRequest userRequest) {
 		User currentUser = userService.find(userId);
 
 		User foundUser = (User) this.userRepository.findByUsername(userRequest.getUsername());
