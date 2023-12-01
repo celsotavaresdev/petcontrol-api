@@ -5,17 +5,14 @@ spring:
         password: 1414
     jpa:
         hibernate:
-            ddl-auto: update
-        properties:
-            hibernate:
-                dialect: org.hibernate.dialect.MySQLDialect
+            ddl-auto: create
 
 api:
     security:
         jwt:
-            audience: ${JWT_AUDIENCE:default-petcontrol-audience}
-            issuer: ${JWT_ISSUER:default-petcontrol-issuer}
-            secret: ${JWT_SECRET:default-petcontrol-secret}
-            expiration: ${JWT_EXPIRATION:900000} #15min
+            audience: default-petcontrol-audience
+            issuer: default-petcontrol-issuer
+            secret: default-petcontrol-secret
+            expiration: 300000 #5min
             refresh-token:
-                expiration: ${JWT_REFRESH_TOKEN_EXPIRATION:1800000} #30min
+                expiration: 600000 #10min
