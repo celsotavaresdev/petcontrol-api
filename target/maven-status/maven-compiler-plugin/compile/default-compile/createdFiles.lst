@@ -2,6 +2,7 @@ com/ongpatinhasquebrilham/petcontrol/domain/service/UserService.class
 com/ongpatinhasquebrilham/petcontrol/infrastructure/security/TokenType.class
 com/ongpatinhasquebrilham/petcontrol/domain/model/Pet.class
 com/ongpatinhasquebrilham/petcontrol/api/exceptionhandler/ApiExceptionHandler.class
+com/ongpatinhasquebrilham/petcontrol/domain/model/Report.class
 com/ongpatinhasquebrilham/petcontrol/core/validation/EnumValue.class
 com/ongpatinhasquebrilham/petcontrol/api/model/UserResponse.class
 com/ongpatinhasquebrilham/petcontrol/infrastructure/security/TokenService.class
@@ -23,12 +24,14 @@ com/ongpatinhasquebrilham/petcontrol/api/assembler/PetRequestDisassembler.class
 com/ongpatinhasquebrilham/petcontrol/PetControlApplication.class
 com/ongpatinhasquebrilham/petcontrol/core/validation/EnumValueValidator.class
 com/ongpatinhasquebrilham/petcontrol/domain/model/PetGender.class
+com/ongpatinhasquebrilham/petcontrol/api/controller/ReportController.class
 com/ongpatinhasquebrilham/petcontrol/infrastructure/security/SecurityConfiguration.class
 com/ongpatinhasquebrilham/petcontrol/api/model/PetResponse.class
 com/ongpatinhasquebrilham/petcontrol/api/model/RefreshTokenRequest.class
 com/ongpatinhasquebrilham/petcontrol/infrastructure/security/exception/InvalidTokenException.class
 com/ongpatinhasquebrilham/petcontrol/infrastructure/security/exception/InvalidAccessTokenException.class
 com/ongpatinhasquebrilham/petcontrol/domain/repository/PetRepository.class
+com/ongpatinhasquebrilham/petcontrol/domain/service/ReportService.class
 com/ongpatinhasquebrilham/petcontrol/domain/model/PetSpecies.class
 com/ongpatinhasquebrilham/petcontrol/domain/repository/UserRepository.class
 com/ongpatinhasquebrilham/petcontrol/domain/service/AuthorizationService.class
@@ -36,6 +39,7 @@ com/ongpatinhasquebrilham/petcontrol/core/validation/group/PutValidation.class
 com/ongpatinhasquebrilham/petcontrol/domain/exception/EntityNotFoundException.class
 com/ongpatinhasquebrilham/petcontrol/domain/model/UserRole.class
 com/ongpatinhasquebrilham/petcontrol/api/assembler/UserRequestDisassembler.class
+com/ongpatinhasquebrilham/petcontrol/domain/repository/ReportRepository.class
 com/ongpatinhasquebrilham/petcontrol/infrastructure/security/SecurityFilter.class
 com/ongpatinhasquebrilham/petcontrol/api/model/LoginRequest.class
 com/ongpatinhasquebrilham/petcontrol/domain/exception/UserNotFoundException.class
