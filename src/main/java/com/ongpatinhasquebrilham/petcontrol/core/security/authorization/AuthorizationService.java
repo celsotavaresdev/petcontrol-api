@@ -1,4 +1,4 @@
-package com.ongpatinhasquebrilham.petcontrol.domain.service;
+package com.ongpatinhasquebrilham.petcontrol.core.security.authorization;
 
 import com.ongpatinhasquebrilham.petcontrol.domain.repository.UserRepository;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.ongpatinhasquebrilham.petcontrol.infrastructure.security;
+package com.ongpatinhasquebrilham.petcontrol.core.security.authorization;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

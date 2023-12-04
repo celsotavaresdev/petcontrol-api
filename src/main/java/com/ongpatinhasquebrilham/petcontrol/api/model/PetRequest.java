@@ -55,4 +55,16 @@ public class PetRequest {
     private boolean isNeutered;
     private String vaccination;
     private String description;
+
+    public void setSpecies(String species) {
+        this.species = species.trim().toUpperCase();
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender.trim().toUpperCase();
+    }
+
+    public void setSize(String size) {
+        this.size = size.trim().toUpperCase();
+    }
 }

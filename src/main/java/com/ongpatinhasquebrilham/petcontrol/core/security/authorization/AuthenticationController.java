@@ -1,12 +1,11 @@
-package com.ongpatinhasquebrilham.petcontrol.api.controller;
+package com.ongpatinhasquebrilham.petcontrol.core.security.authorization;
 
 import com.ongpatinhasquebrilham.petcontrol.api.model.LoginRequest;
 import com.ongpatinhasquebrilham.petcontrol.api.model.LoginResponse;
 import com.ongpatinhasquebrilham.petcontrol.api.model.RefreshTokenRequest;
 import com.ongpatinhasquebrilham.petcontrol.domain.model.User;
 import com.ongpatinhasquebrilham.petcontrol.domain.repository.UserRepository;
-import com.ongpatinhasquebrilham.petcontrol.infrastructure.security.TokenService;
-import com.ongpatinhasquebrilham.petcontrol.infrastructure.security.exception.InvalidTokenException;
+import com.ongpatinhasquebrilham.petcontrol.core.security.authorization.exception.InvalidTokenException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

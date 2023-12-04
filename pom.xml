@@ -10,9 +10,9 @@
 	</parent>
 	<groupId>com.ongpatinhasquebrilham</groupId>
 	<artifactId>petcontrol</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>pet-control</name>
-	<description>API Controle de Pets - ONG Patinhas que Brilham</description>
+	<description>PetControl API - ONG Patinhas que Brilham</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>

@@ -1,14 +1,18 @@
 package com.ongpatinhasquebrilham.petcontrol.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 @AllArgsConstructor
-@Getter
 public enum UserRole {
     ADMIN("admin"),
     USER("user");
 
     private final String role;
+
+    @JsonValue
+    public String role() {
+        return role;
+    }
 
 }

@@ -1,9 +1,10 @@
-package com.ongpatinhasquebrilham.petcontrol.infrastructure.security;
+package com.ongpatinhasquebrilham.petcontrol.core.security;
 
 import java.io.IOException;
 import java.util.Objects;
 
-import com.ongpatinhasquebrilham.petcontrol.infrastructure.security.exception.InvalidTokenException;
+import com.ongpatinhasquebrilham.petcontrol.core.security.authorization.TokenService;
+import com.ongpatinhasquebrilham.petcontrol.core.security.authorization.exception.InvalidTokenException;
 import jakarta.annotation.Nonnull;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

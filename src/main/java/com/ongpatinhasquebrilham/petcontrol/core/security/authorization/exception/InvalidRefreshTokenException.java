@@ -1,4 +1,4 @@
-package com.ongpatinhasquebrilham.petcontrol.infrastructure.security.exception;
+package com.ongpatinhasquebrilham.petcontrol.core.security.authorization.exception;
 
 public class InvalidRefreshTokenException extends InvalidTokenException {
 

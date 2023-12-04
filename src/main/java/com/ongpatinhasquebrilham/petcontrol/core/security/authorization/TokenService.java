@@ -1,4 +1,4 @@
-package com.ongpatinhasquebrilham.petcontrol.infrastructure.security;
+package com.ongpatinhasquebrilham.petcontrol.core.security.authorization;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
@@ -6,9 +6,9 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.ongpatinhasquebrilham.petcontrol.infrastructure.security.exception.InvalidAccessTokenException;
-import com.ongpatinhasquebrilham.petcontrol.infrastructure.security.exception.InvalidRefreshTokenException;
-import com.ongpatinhasquebrilham.petcontrol.infrastructure.security.exception.InvalidTokenException;
+import com.ongpatinhasquebrilham.petcontrol.core.security.authorization.exception.InvalidAccessTokenException;
+import com.ongpatinhasquebrilham.petcontrol.core.security.authorization.exception.InvalidRefreshTokenException;
+import com.ongpatinhasquebrilham.petcontrol.core.security.authorization.exception.InvalidTokenException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -58,15 +58,6 @@ public class TokenService {
         } catch (InvalidTokenException e) {
             throw new InvalidRefreshTokenException("Invalid Refresh Token");
         }
-    }
-
-    public boolean validateToken(String token) {
-        try {
-            decodeToken(token);
-        } catch (InvalidTokenException e) {
-            return false;
-        }
-        return true;
     }
 
     private DecodedJWT decodeToken(String token) throws InvalidTokenException {
