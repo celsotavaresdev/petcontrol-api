@@ -1,7 +1,9 @@
 package com.ongpatinhasquebrilham.petcontrol.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public enum PetSize {
     SMALL("Pequeno"),
     MEDIUM("Médio"),
@@ -9,12 +11,9 @@ public enum PetSize {
 
     private final String size;
 
-    PetSize(String size) {
-        this.size = size;
-    }
-
     @JsonValue
     public String size() {
         return size;
     }
+
 }

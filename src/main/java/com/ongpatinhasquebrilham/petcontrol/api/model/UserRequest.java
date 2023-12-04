@@ -34,7 +34,7 @@ public class UserRequest {
     private String role;
 
     public void setUsername(String username) {
-        this.username = username.trim();
+        this.username = username.trim().toLowerCase();
     }
 
     public void setRole(String role) {

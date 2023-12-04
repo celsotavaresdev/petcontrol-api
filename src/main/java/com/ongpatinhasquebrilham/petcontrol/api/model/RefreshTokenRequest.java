@@ -1,5 +1,6 @@
 package com.ongpatinhasquebrilham.petcontrol.api.model;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class RefreshTokenRequest {
 
-    private String accessToken;
+    @NotBlank
     private String refreshToken;
 
 }

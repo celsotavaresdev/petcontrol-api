@@ -13,8 +13,8 @@ public class ReportService {
     private ReportRepository reportRepository;
 
     @Transactional
-    public Report save(Report report) {
-        return reportRepository.save(report);
+    public void save(Report report) {
+        reportRepository.save(report);
     }
 
 }
