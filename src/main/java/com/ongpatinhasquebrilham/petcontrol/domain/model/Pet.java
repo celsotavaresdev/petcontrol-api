@@ -49,7 +49,7 @@ public class Pet {
 	private String microchip;
 
 	@Column(nullable = false)
-	private boolean isNeutered;
+	private boolean neutered;
 
 	@Column(columnDefinition = "TEXT")
 	private String vaccination;

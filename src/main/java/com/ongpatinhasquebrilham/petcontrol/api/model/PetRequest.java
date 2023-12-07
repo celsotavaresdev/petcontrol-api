@@ -46,13 +46,15 @@ public class PetRequest {
     private String size;
 
     @NotNull(groups = PostValidation.class)
-    @Digits(integer = 3, fraction = 2, groups = {PostValidation.class, PutValidation.class})
-    private double weight;
+    @DecimalMax(value = "99.99", groups = {PostValidation.class, PutValidation.class})
+    @DecimalMin(value = "0.01", groups = {PostValidation.class, PutValidation.class})
+    @Digits(integer = 2, fraction = 2, groups = {PostValidation.class, PutValidation.class})
+    private Double weight;
 
-    @Pattern(regexp = "[0-9]{15}", groups = {PostValidation.class, PutValidation.class})
+    @Pattern(regexp = "^$|[0-9]{15}", groups = {PostValidation.class, PutValidation.class})
     private String microchip;
 
-    private boolean isNeutered;
+    private boolean neutered;
     private String vaccination;
     private String description;
 
