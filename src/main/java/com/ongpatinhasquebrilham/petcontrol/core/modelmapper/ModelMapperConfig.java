@@ -30,8 +30,8 @@ public class ModelMapperConfig {
                                 LocalDate.now()))
                         .intValue();
 
-        Converter<String, String> trimStrings =
-                ctx -> ctx.getSource().trim();
+        Converter<String, String> stringConverter =
+                ctx -> ctx.getSource().trim().isBlank() ? null : ctx.getSource().trim();
 
         modelMapper.createTypeMap(PetRequest.class, Pet.class)
                 .addMappings(mapper -> mapper.using(toEstimatedBirthdate)
@@ -42,7 +42,7 @@ public class ModelMapperConfig {
                         .map(Pet::getBirthdate, PetResponse::setAgeInMonths));
 
         modelMapper.createTypeMap(String.class, String.class)
-                .setConverter(trimStrings);
+                .setConverter(stringConverter);
 
         return modelMapper;
     }

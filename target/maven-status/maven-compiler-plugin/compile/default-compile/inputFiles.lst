@@ -27,8 +27,8 @@
 /var/home/celsotavares/Projects/petcontrol-api/src/main/java/com/ongpatinhasquebrilham/petcontrol/core/security/authorization/exception/InvalidRefreshTokenException.java
 /var/home/celsotavares/Projects/petcontrol-api/src/main/java/com/ongpatinhasquebrilham/petcontrol/domain/service/UserService.java
 /var/home/celsotavares/Projects/petcontrol-api/src/main/java/com/ongpatinhasquebrilham/petcontrol/api/controller/PetController.java
-/var/home/celsotavares/Projects/petcontrol-api/src/main/java/com/ongpatinhasquebrilham/petcontrol/core/validation/NoWhitespaceValidator.java
 /var/home/celsotavares/Projects/petcontrol-api/src/main/java/com/ongpatinhasquebrilham/petcontrol/core/modelmapper/ModelMapperConfig.java
+/var/home/celsotavares/Projects/petcontrol-api/src/main/java/com/ongpatinhasquebrilham/petcontrol/core/validation/NoWhitespaceValidator.java
 /var/home/celsotavares/Projects/petcontrol-api/src/main/java/com/ongpatinhasquebrilham/petcontrol/domain/repository/ReportRepository.java
 /var/home/celsotavares/Projects/petcontrol-api/src/main/java/com/ongpatinhasquebrilham/petcontrol/domain/service/ReportService.java
 /var/home/celsotavares/Projects/petcontrol-api/src/main/java/com/ongpatinhasquebrilham/petcontrol/api/controller/ReportController.java
